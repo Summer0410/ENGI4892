@@ -1,6 +1,6 @@
 //
 //  BSTMap.h
-//  
+//
 //
 //  Created by Xialinqiao on 2017-07-01.
 //
@@ -11,8 +11,40 @@
 #include<iostream>
 using namespace std;
 
+
 template<class K, class V>
-class BSTMap{
+class Map
+{
+  public:
+    // pre-condition:   a valid key/value pair
+    // post-condition:  pair will be added to the BST, if not already present
+    //                  Return true if insert succeeded, else false
+    virtual bool insert(const K& key, const V& value) = 0;
+
+    // pre-condition:   a valid key
+    // post-condition:  if key was present, key/value pair is removed
+    //                  Return true if remove succeeded, else false
+    virtual bool remove(const K& key) = 0;
+
+    // pre-condition:   a valid key
+    // post-condition:  return the corresponding value for key, else nullptr
+    //                  the BST is not changed
+    virtual const V* search(const K& key) const = 0;
+
+    // pre-condition:   a valid BST
+    // post-condition:  return whether or not BST contains any items
+    //                  the BST is not changed
+    virtual bool isEmpty() const = 0;
+
+    // pre-condition:   a valid BST
+    // post-condition:  prints contents of BST in sorted order
+    //                  the BST is not changed
+    virtual void print() const = 0;
+};
+
+
+template<class K, class V>
+class BSTMap: public Map<K,V>{
     //Private members
 private:
     struct treeNode{
@@ -32,27 +64,27 @@ public:
     // pre-condition:   a valid key/value pair
     // post-condition:  pair will be added to the BST, if not already present
     //                  Return true if insert succeeded, else false
-    bool insert(const K& key, const V& value);
-    
+    bool insert(const K& key, const V& value) override;
+
     // pre-condition:   a valid key
     // post-condition:  if key was present, key/value pair is removed
     //                  Return true if remove succeeded, else false
-    bool remove(const K& key);
-    
+    bool remove(const K& key) override;
+
     // pre-condition:   a valid key
     // post-condition:  return the corresponding value for key, else nullptr
     //                  the BST is not changed
-    const V* search(const K& key) const;
-    
+    const V* search(const K& key) const override;
+
     // pre-condition:   a valid BST
     // post-condition:  return whether or not BST contains any items
     //                  the BST is not changed
-    bool isEmpty() const;
-    
+    bool isEmpty() const override;
+
     // pre-condition:   a valid BST
     // post-condition:  prints contents of BST in sorted order
     //                  the BST is not changed
-    void print() const;
+    void print() const override;
     void inorder(treeNode* p) const;
     void deleteByMerging(treeNode*& node);
 };
