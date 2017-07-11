@@ -1,6 +1,6 @@
 //
 //  BSTMap.cpp
-//  
+//
 //
 //  Created by Xialinqiao on 2017-07-01.
 //
@@ -30,8 +30,8 @@ bool BSTMap<K,V>::insert(const K& key, const V& value){
         pre->right=new treeNode(key,value,0,0);
     else
         pre->left=new treeNode(key,value,0,0);
-        
-            
+
+
     }
 
 //check if the map is empty
@@ -92,11 +92,13 @@ bool BSTMap<K,V>::remove(const K& key){
         if(p->nodeKey<key){
             p=p->right;
         }
-        if(p->nodeKey>key){
+        //if(p->nodeKey>key)
+        else
+        {
             p=p->left;
         }
     }
-    cout<<"("<<p->nodeKey<<")"<<prev->nodeKey<<endl;
+  //  cout<<"("<<p->nodeKey<<")"<<prev->nodeKey<<endl;
     if (p!=nullptr&&p->nodeKey==key){
       if (p==root)
         deleteByMerging(root);
@@ -106,7 +108,7 @@ bool BSTMap<K,V>::remove(const K& key){
         deleteByMerging(prev->right);
         return true;
           }
-    else if (p==nullptr){
+    else if (!isEmpty()){
         cout<<"The node you want to delete was not found"<<endl;
         return false;
     }
@@ -120,15 +122,15 @@ template<class K,class V>
 void BSTMap<K,V>::deleteByMerging(treeNode*& node){
     treeNode* temp=node;
    if (node!=nullptr){
-     if(node->left==nullptr)//no left child
-        node=node->right;//go to right
-        
-     else if(node->right==nullptr){//no right child
-        node=node->left;//go to left
+     if(node->right==nullptr)//no left child
+        node=node->left;//go to right
+
+     else if(node->left==nullptr){//no right child
+        node=node->right;//go to left
     }
-     else if(node->right==nullptr&&node->left==nullptr){
-         temp=node;
-     }
+    // else if(node->right==nullptr&&node->left==nullptr){
+      //   temp=node;
+     //}
      else{
          temp=node->left;//temp points to node's left child;
          while(temp->right!=nullptr)
@@ -136,13 +138,13 @@ void BSTMap<K,V>::deleteByMerging(treeNode*& node){
          temp->right=node->right;
          temp=node;
          node=node->left;
-         
+
      }
       delete temp;
     }
-         
+
  }
-    
+
 
 //constructor
 template<class K,class V>
@@ -165,17 +167,20 @@ int main(){
         cout<<"cannot open the file"<<endl;
     while(file>>name>>number){
         map1->insert(name,number);
-        map2->insert(number,name);
+      //  map2->insert(number,name);
 
     }
     map1->print();
-    map1->remove("Niuniu");//test delete function
-    cout<<"map1 content after deletion>>"<<endl;
+    cout<<endl;
+    map1->remove("Bob");//test delete function
+  //  cout<<"map1 content after deletion>>"<<endl;
     map1->print();//print the content after deletion to check the functionality of the remove function
     //test map 2
+    /*
     map2->print();
     map2->remove(359433);
     cout<<"map2 content after deletion>>"<<endl;
     map2->print();
+    */
     return 0;
 }
