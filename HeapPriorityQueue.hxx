@@ -39,16 +39,12 @@ class HeapPriorityQueue : public PriorityQueue<K,V>
    
     int child1=idx*2+1;
     int child2=idx*2+2;
-    if(child1<heap.size()-1&&child1<heap.size()-1){
+    if(child1<heap.size()&&child1<heap.size()){
     if(heap[child1].key>heap[child2].key&&heap[idx].key<heap[child1].key){
      PQEntry temp=PQEntry(heap[child1].key,heap[child1].value);
      heap[child1]=PQEntry(heap[idx].key,heap[idx].value);
      heap[idx]=temp;
-     cout<<"new root:"<<endl;
-     cout<<heap[idx].key<<endl;
-      cout<<"new 1:"<<endl;
-     cout<<heap[child1].key<<endl;
-     //trickleDown(child1);
+     trickleDown(child1);
     }
    else if(heap[child2].key>heap[child1].key&&heap[idx].key<heap[child2].key){
      PQEntry temp=PQEntry(heap[child2].key,heap[child2].value);
@@ -77,7 +73,7 @@ class HeapPriorityQueue : public PriorityQueue<K,V>
     // We use a vector so we don't have to worry about running
     // out of space
     std::vector<PQEntry> heap;
-   int size=0;
+    int size=0;
 };
 
 #endif
